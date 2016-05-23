@@ -29,4 +29,22 @@ abstract class AbstractKoma {
     fill(#FF0000, SQUARESIZE);
     rect(this.x*SQUARESIZE, this.y*SQUARESIZE, SQUARESIZE, SQUARESIZE);
   }
+    void updatePos(int toX, int toY) {
+    this.x=toX;
+    this.y=toY;
+    this.kStat.captured=false;
+    gs.turn = (gs.turn+1)%2;
+  }
+
+  void moveAndCapture(AbstractKoma enemy, int toX, int toY) {
+    this.updatePos(toX, toY);
+    if (enemy!=null) enemy.captured();
+  }
+
+  void captured() {
+    this.kStat.captured=true;
+    this.team = (this.team+1)%2;
+    this.y = board.mArea[this.team].getBlankYIndex();
+    this.x = board.mArea[this.team].posX;
+  }
 }
